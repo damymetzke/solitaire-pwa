@@ -1,0 +1,19 @@
+{
+  "name": "solitair-pwa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "private": true,
+  "scripts": {
+    "serve": "parcel serve ./src/html/index.html --out-dir build",
+    "dist": "parcel build ./src/html/index.html --out-dir dist"
+  },
+  "author": "Damy Metzke",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "sass": "^1.32.4",
+    "typescript": "^4.1.3"
+  }
+}
