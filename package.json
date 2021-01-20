@@ -6,14 +6,22 @@
   "private": true,
   "scripts": {
     "serve": "parcel serve ./src/html/index.html --out-dir build",
-    "dist": "parcel build ./src/html/index.html --out-dir dist --no-source-maps"
+    "dist": "parcel build ./src/html/index.html --out-dir dist --no-source-maps",
+    "lint-eslint": "eslint \"./src/ts/**/*.ts\"",
+    "lint-prettier": "prettier --check .",
+    "lint-eslint-fix": "eslint \"./src/ts/**/*.ts\" --fix",
+    "lint-prettier-fix": "prettier --write ."
   },
   "author": "Damy Metzke",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
     "parcel": "^1.12.4",
     "parcel-plugin-sw-precache": "^1.1.2",
+    "prettier": "^2.2.1",
     "sass": "^1.32.4",
     "typescript": "^4.1.3"
   }
