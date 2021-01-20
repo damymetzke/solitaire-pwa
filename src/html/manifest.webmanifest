@@ -1,16 +1,16 @@
 {
-    "name": "Solitair PWA",
-    "short_name": "Solitair",
-    "description": "Solitair app powered by PWA and WASM technology",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#ffffff",
-    "icons": [
-        {
-            "src": "../img/icon.png",
-            "type": "image/png",
-            "sizes": "500x500"
-        }
-    ]
+  "name": "Solitair PWA",
+  "short_name": "Solitair",
+  "description": "Solitair app powered by PWA and WASM technology",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "../img/icon.png",
+      "type": "image/png",
+      "sizes": "500x500"
+    }
+  ]
 }
