@@ -1,10 +1,10 @@
-# Solitair PWA
+# Solitaire PWA
 
 [![Lint](https://github.com/damymetzke/solitair-pwa/workflows/Lint/badge.svg?branch=main)](https://github.com/damymetzke/solitair-pwa/actions?query=workflow%3ALint)
 [![Build and Run Tests](https://github.com/damymetzke/solitair-pwa/workflows/Build%20and%20Run%20Tests/badge.svg?branch=main)](https://github.com/damymetzke/solitair-pwa/actions?query=workflow%3A%22Build+and+Run+Tests%22)
 
-This project is a PWA implementation of solitair.
-In addition to this the app uses wasm and c++.
+This project is a PWA implementation of Solitaire.
+In addition to this the app uses Wasm and C++.
 
 ## Quick setup
 
