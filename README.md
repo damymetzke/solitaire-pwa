@@ -9,6 +9,7 @@ In addition to this the app uses wasm and c++.
 ## Quick setup
 
 Requirements:
+
 - [NodeJS](https://nodejs.org) (14.x)
 - [npm](https://www.npmjs.com/get-npm) (installed with NodeJS)
 
