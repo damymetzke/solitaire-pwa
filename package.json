@@ -7,11 +7,13 @@
   "scripts": {
     "serve": "parcel serve ./src/html/index.html --out-dir build",
     "dist": "parcel build ./src/html/index.html --out-dir dist --no-source-maps",
+    "setup-cmake": "emcmake cmake -S . -B ./cmakeBuild",
+    "build-cmake": "make -C ./cmakeBuild",
+    "test": "jest",
     "lint-eslint": "eslint \"./src/ts/**/*.ts\"",
     "lint-prettier": "prettier --check .",
     "lint-eslint-fix": "eslint \"./src/ts/**/*.ts\" --fix",
-    "lint-prettier-fix": "prettier --write .",
-    "test": "jest"
+    "lint-prettier-fix": "prettier --write ."
   },
   "author": "Damy Metzke",
   "license": "MIT",
