@@ -1,5 +1,7 @@
 import "../style/style.scss";
 
+import wasmModule from "../cpp/wasm/wasm.cpp";
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
@@ -17,3 +19,7 @@ if ("serviceWorker" in navigator) {
       );
   });
 }
+
+wasmModule().then((wasmInstance) => {
+  console.log(wasmInstance.ccall("ping", "string", [], []));
+});
