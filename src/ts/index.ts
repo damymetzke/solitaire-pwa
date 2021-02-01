@@ -1,6 +1,7 @@
 import "../style/style.scss";
 
 import * as solitaire from "./solitaire/solitaire";
+import { start as startFuture } from "./future/futureInterface";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
@@ -21,7 +22,7 @@ if ("serviceWorker" in navigator) {
 }
 
 async function run() {
-  await solitaire.waitUntilLoaded();
+  await Promise.all([startFuture(), solitaire.waitUntilLoaded()]);
   console.log(solitaire.ping());
 }
 
