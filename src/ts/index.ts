@@ -1,5 +1,7 @@
 import "../style/style.scss";
 
+import * as solitaire from "./solitaire/solitaire";
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
@@ -18,4 +20,9 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-const solitaireWorker = new Worker("./solitaire/solitaire.ts");
+async function run() {
+  await solitaire.waitUntilLoaded();
+  console.log(solitaire.ping());
+}
+
+run();
