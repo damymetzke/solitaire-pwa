@@ -28,5 +28,11 @@ export async function waitUntilLoaded(): Promise<void> {
 }
 
 export function ping(): string {
+  if (wasmInstance === undefined) {
+    console.warn(
+      "solitaire function 'ping' was called, but wasm has not been loaded yet."
+    );
+    return "";
+  }
   return wasmInstance.ccall("ping", "string", [], []);
 }
