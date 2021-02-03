@@ -10,3 +10,32 @@ async function run() {
 }
 
 run();
+
+function onCall(message) {
+  const result = (() => {
+    switch (message.function) {
+      case "ping":
+        return solitaire.ping();
+
+      default:
+        console.warn(
+          `FutureInterface has recieved a call request for unsupported function: '${message.function}'.`
+        );
+    }
+  })();
+
+  postMessageToMain({ type: "call-return", id: message.id, result: result });
+}
+
+onmessage = (event) => {
+  switch (event.data.type) {
+    case "call":
+      onCall(event.data);
+      break;
+
+    default:
+      console.warn(
+        `FutureInterface has recieved an unsupported message of type '${event.data.type}'.`
+      );
+  }
+};
