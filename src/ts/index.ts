@@ -2,6 +2,7 @@ import "../style/style.scss";
 
 import * as solitaire from "./solitaire/solitaire";
 import { start as startFuture } from "./future/futureInterface";
+import "./draw";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
