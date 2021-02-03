@@ -1,5 +1,4 @@
-p::after {
-  content: "Hello World!";
-  color: hsl(90, 53%, 66%);
-  background-color: hsl(270, 88%, 36%);
+#draw-target {
+  border: 1px solid black;
+  width: 100%;
 }
