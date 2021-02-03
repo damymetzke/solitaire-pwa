@@ -28,21 +28,31 @@ export default class CardCollection {
 
   cardBackImage: HTMLImageElement;
 
-  constructor(
-    numCards: number,
-    cardImage: HTMLImageElement,
-    cardBackImage: HTMLImageElement
-  ) {
+  constructor(numCards: number, cardBackImage: HTMLImageElement) {
     this.cardBackImage = cardBackImage;
     this.cards = [];
     for (let i = 0; i < numCards; ++i) {
       this.cards.push({
-        image: cardImage,
+        image: cardBackImage,
         isFront: true,
-        left: 400 * i + 10,
-        top: 10,
+        left: 400 * (i % 13) + 10,
+        top: Math.floor(i / 13) * 600 + 10,
       });
     }
+  }
+
+  static createIncremental(
+    numCards: number,
+    cardBackImage: HTMLImageElement,
+    cardFrontImages: HTMLImageElement[]
+  ): CardCollection {
+    const result = new CardCollection(numCards, cardBackImage);
+
+    for (let i = 0; i < numCards; ++i) {
+      result.cards[i].image = cardFrontImages[i % cardFrontImages.length];
+    }
+
+    return result;
   }
 
   draw(context: CanvasRenderingContext2D) {
@@ -59,15 +69,13 @@ export default class CardCollection {
 
 async function run() {
   const [card, cardBack] = await loadCards([
-    import("../img/card.png"),
-    import("../img/card-back.png"),
+    (await import("../img/card.png")).default,
+    (await import("../img/card-back.png")).default,
   ]);
 
-  const collection = new CardCollection(20, card, cardBack);
+  const collection = CardCollection.createIncremental(53, cardBack, [card]);
 
-  collection.cards[4].isFront = false;
-  collection.cards[8].isFront = false;
-  collection.cards[16].isFront = false;
+  collection.cards[52].isFront = false;
 
   collection.draw(drawContext);
 }

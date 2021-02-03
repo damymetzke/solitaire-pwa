@@ -1,8 +1,6 @@
-export async function loadCard(
-  source: Promise<string>
-): Promise<HTMLImageElement> {
+export async function loadCard(source: string): Promise<HTMLImageElement> {
   const result = new Image();
-  result.src = (await source).default;
+  result.src = source;
   return new Promise<HTMLImageElement>((resolve) => {
     result.addEventListener("load", () => {
       resolve(result);
