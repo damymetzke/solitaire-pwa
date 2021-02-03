@@ -1,33 +1,11 @@
 import Card from "./card";
-
-import cardSrc from "../img/card.png";
-
-const cardImg = new Image();
-cardImg.src = cardSrc;
-
-import cardBackSrc from "../img/card-back.png";
-
-const cardBackImg = new Image();
-cardBackImg.src = cardBackSrc;
-
-let cardLoaded = false;
-let cardBackLoaded = false;
+import { loadCards } from "./loadCard";
 
 const drawContext = (<HTMLCanvasElement>(
   document.getElementById("draw-target")
 )).getContext("2d");
 
 drawContext.imageSmoothingEnabled = false;
-
-function onLoaded() {
-  const collection = new CardCollection(20);
-
-  collection.cards[4].isFront = false;
-  collection.cards[8].isFront = false;
-  collection.cards[16].isFront = false;
-
-  collection.draw(drawContext);
-}
 
 export interface CardRect {
   img: HTMLImageElement;
@@ -48,11 +26,18 @@ function drawCard(
 export default class CardCollection {
   cards: Card[];
 
-  constructor(numCards: number) {
+  cardBackImage: HTMLImageElement;
+
+  constructor(
+    numCards: number,
+    cardImage: HTMLImageElement,
+    cardBackImage: HTMLImageElement
+  ) {
+    this.cardBackImage = cardBackImage;
     this.cards = [];
     for (let i = 0; i < numCards; ++i) {
       this.cards.push({
-        image: cardImg,
+        image: cardImage,
         isFront: true,
         left: 400 * i + 10,
         top: 10,
@@ -63,7 +48,7 @@ export default class CardCollection {
   draw(context: CanvasRenderingContext2D) {
     this.cards.forEach((card) => {
       drawCard(context, {
-        img: card.isFront ? card.image : cardBackImg,
+        img: card.isFront ? card.image : this.cardBackImage,
         left: card.left,
         top: card.top,
         width: 350,
@@ -72,23 +57,19 @@ export default class CardCollection {
   }
 }
 
-cardImg.addEventListener(
-  "load",
-  () => {
-    cardLoaded = true;
-    if (cardBackLoaded) {
-      onLoaded();
-    }
-  },
-  false
-);
-cardBackImg.addEventListener(
-  "load",
-  () => {
-    cardBackLoaded = true;
-    if (cardLoaded) {
-      onLoaded();
-    }
-  },
-  false
-);
+async function run() {
+  const [card, cardBack] = await loadCards([
+    import("../img/card.png"),
+    import("../img/card-back.png"),
+  ]);
+
+  const collection = new CardCollection(20, card, cardBack);
+
+  collection.cards[4].isFront = false;
+  collection.cards[8].isFront = false;
+  collection.cards[16].isFront = false;
+
+  collection.draw(drawContext);
+}
+
+run();
