@@ -22,8 +22,12 @@ if ("serviceWorker" in navigator) {
 }
 
 async function run() {
-  await Promise.all([startFuture(), solitaire.waitUntilLoaded()]);
+  const [future] = await Promise.all([
+    startFuture(),
+    solitaire.waitUntilLoaded(),
+  ]);
   console.log(solitaire.ping());
+  console.log(await future.ping());
 }
 
 run();
