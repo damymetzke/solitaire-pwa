@@ -4,8 +4,10 @@
 name: Build and Run Tests
 
 on:
-  schedule:
-    - cron: 0 0 * * *
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -22,7 +24,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - uses: mymindstorm/setup-emsdk@v8
-      - run: npm run setup-cmake
-      - run: npm run build-cmake
-      - run: npm run dist
+      - run: npm test
