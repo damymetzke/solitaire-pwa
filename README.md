@@ -1,7 +1,9 @@
 # Solitaire PWA
 
 [![Lint](https://github.com/damymetzke/solitair-pwa/workflows/Lint/badge.svg?branch=main)](https://github.com/damymetzke/solitair-pwa/actions?query=workflow%3ALint)
-[![Build and Run Tests](https://github.com/damymetzke/solitair-pwa/workflows/Build%20and%20Run%20Tests/badge.svg?branch=main)](https://github.com/damymetzke/solitair-pwa/actions?query=workflow%3A%22Build+and+Run+Tests%22)
+[![Run Tests](https://github.com/damymetzke/solitaire-pwa/workflows/Run%20Tests/badge.svg?branch=main)](https://github.com/damymetzke/solitaire-pwa/actions?query=workflow%3A%22Run+Tests%22)
+[![Build](https://github.com/damymetzke/solitaire-pwa/workflows/Build/badge.svg?branch=main)](https://github.com/damymetzke/solitaire-pwa/actions?query=workflow%3ABuild)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6c5a8c95-4a22-4cb5-a041-20cc5966b597/deploy-status)](https://solitaire-pwa.netlify.app)
 
 This project is a PWA implementation of Solitaire.
 In addition to this the app uses Wasm and C++.
