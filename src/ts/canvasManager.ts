@@ -1,6 +1,6 @@
 const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
 
-const WIDTH_IN_CARD_SPACE = 15;
+const WIDTH_IN_CARD_SPACE = 17;
 const HEIGHT_IN_CARD_SPACE =
   (WIDTH_IN_CARD_SPACE / canvasElement.width) * canvasElement.height;
 
