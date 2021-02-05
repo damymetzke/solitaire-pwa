@@ -4,9 +4,9 @@ import { loadCards } from "./loadCard";
 import "./canvasManager";
 import DragManager from "./dragManager";
 
-const drawContext = (<HTMLCanvasElement>(
-  document.getElementById("draw-target")
-)).getContext("2d");
+const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
+
+const drawContext = canvasElement.getContext("2d");
 
 drawContext.imageSmoothingEnabled = false;
 
@@ -14,9 +14,12 @@ let collection: CardCollection = null;
 let dragManager: DragManager = null;
 
 function loop() {
-  const shouldDraw = false;
+  let shouldDraw = false;
+
+  shouldDraw ||= dragManager.drawUpdate();
 
   if (shouldDraw) {
+    drawContext.clearRect(0, 0, canvasElement.width, canvasElement.height);
     collection.draw(drawContext);
   }
 
