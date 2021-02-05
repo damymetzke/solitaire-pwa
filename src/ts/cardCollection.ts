@@ -31,7 +31,7 @@ export default class CardCollection {
         isFront: true,
         left: 0,
         top: 0,
-        canDrag: true,
+        canDrag: false,
         isMoving: false,
       });
     }
@@ -59,6 +59,7 @@ export default class CardCollection {
     result.cards.forEach((card, index) => {
       card.left = (8 / 7) * (index % 13) + 1 / 7;
       card.top = Math.floor(index / 13) * (8 / 7) * 1.5 + 1 / 7;
+      card.canDrag = true;
     });
 
     result.cards[52].left = 105 / 7;

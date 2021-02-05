@@ -50,6 +50,7 @@ export default class DragManager {
     for (let i = this.collection.cards.length - 1; i >= 0; --i) {
       const card = this.collection.cards[i];
       if (
+        card.canDrag &&
         cardX > card.left &&
         cardX < card.left + 1 &&
         cardY > card.top &&
