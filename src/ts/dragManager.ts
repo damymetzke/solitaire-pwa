@@ -39,11 +39,14 @@ export default class DragManager {
       );
       return;
     }
+
     const [cardX, cardY] = coordinatesFromScreen(
       event.offsetX,
       event.offsetY
     ).toCard();
-    this.collection.cards.some((card) => {
+
+    for (let i = this.collection.cards.length - 1; i >= 0; --i) {
+      const card = this.collection.cards[i];
       if (
         cardX > card.left &&
         cardX < card.left + 1 &&
@@ -53,10 +56,9 @@ export default class DragManager {
         this.draggingCard = card;
         this.draggingOffsetX = -(cardX - card.left);
         this.draggingOffsetY = -(cardY - card.top);
-        return true;
+        break;
       }
-      return false;
-    });
+    }
   }
 
   onMouseMove(event: MouseEvent): void {
