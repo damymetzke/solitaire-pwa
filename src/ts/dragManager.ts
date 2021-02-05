@@ -2,11 +2,13 @@ import { coordinatesFromScreen } from "./canvasManager";
 import Card from "./card";
 import CardCollection from "./cardCollection";
 
-const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
+const canvasElement = <HTMLCanvasElement>(
+  document.getElementById("draw-target-move")
+);
 
 export default class DragManager {
   collection: CardCollection;
-  dirty = false;
+  dirty = 2;
   draggingCard: Card = null;
   draggingOffsetX = 0;
   draggingOffsetY = 0;
@@ -26,9 +28,9 @@ export default class DragManager {
     });
   }
 
-  drawUpdate(): boolean {
+  drawUpdate(): number {
     const result = this.dirty;
-    this.dirty = false;
+    this.dirty = 0;
     return result;
   }
 
@@ -54,8 +56,11 @@ export default class DragManager {
         cardY < card.top + 1.5
       ) {
         this.draggingCard = card;
+        card.isMoving = true;
         this.draggingOffsetX = -(cardX - card.left);
         this.draggingOffsetY = -(cardY - card.top);
+        this.dirty = 2;
+
         break;
       }
     }
@@ -66,7 +71,7 @@ export default class DragManager {
       return;
     }
 
-    this.dirty = true;
+    this.dirty = Math.max(1, this.dirty);
     const [cardX, cardY] = coordinatesFromScreen(
       event.offsetX,
       event.offsetY
@@ -81,6 +86,8 @@ export default class DragManager {
       return;
     }
 
+    this.draggingCard.isMoving = false;
     this.draggingCard = null;
+    this.dirty = 2;
   }
 }

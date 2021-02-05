@@ -1,4 +1,4 @@
-import { coordinatesFromCard, coordinatesFromScreen } from "./canvasManager";
+import { coordinatesFromCard } from "./canvasManager";
 import Card from "./card";
 
 export interface CardRect {
@@ -32,6 +32,7 @@ export default class CardCollection {
         left: 0,
         top: 0,
         canDrag: true,
+        isMoving: false,
       });
     }
   }
@@ -68,6 +69,28 @@ export default class CardCollection {
 
   draw(context: CanvasRenderingContext2D) {
     this.cards.forEach((card) => {
+      if (card.isMoving) {
+        return;
+      }
+      const [canvasWidth] = coordinatesFromCard(1, 1).toCanvas();
+      const [canvasX, canvasY] = coordinatesFromCard(
+        card.left,
+        card.top
+      ).toCanvas();
+      drawCard(context, {
+        img: card.isFront ? card.image : this.cardBackImage,
+        left: canvasX,
+        top: canvasY,
+        width: canvasWidth,
+      });
+    });
+  }
+
+  drawDynamic(context: CanvasRenderingContext2D) {
+    this.cards.forEach((card) => {
+      if (!card.isMoving) {
+        return;
+      }
       const [canvasWidth] = coordinatesFromCard(1, 1).toCanvas();
       const [canvasX, canvasY] = coordinatesFromCard(
         card.left,

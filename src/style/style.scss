@@ -1,4 +1,12 @@
-#draw-target {
+#draw-target-static,
+#draw-target-move {
   border: 1px solid black;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#canvas-container {
+  position: relative;
 }
