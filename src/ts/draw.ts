@@ -1,6 +1,7 @@
 import "./cardCollection";
 import CardCollection from "./cardCollection";
 import { loadCards } from "./loadCard";
+import "./canvasManager";
 
 const drawContext = (<HTMLCanvasElement>(
   document.getElementById("draw-target")
