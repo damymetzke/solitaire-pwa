@@ -57,8 +57,8 @@ function loop() {
 
 async function run() {
   const [card, cardBack] = await loadCards([
-    (await import("../img/card.png")).default,
-    (await import("../img/card-back.png")).default,
+    (await import("../../img/card.png")).default,
+    (await import("../../img/card-back.png")).default,
   ]);
 
   collection = CardCollection.createDisplay(cardBack, [card]);
