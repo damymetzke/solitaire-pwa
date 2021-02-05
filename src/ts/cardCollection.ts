@@ -31,8 +31,7 @@ export default class CardCollection {
         isFront: true,
         left: 0,
         top: 0,
-        // left: 400 * (i % 13) + 10,
-        // top: Math.floor(i / 13) * 600 + 10,
+        canDrag: true,
       });
     }
   }

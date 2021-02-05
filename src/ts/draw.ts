@@ -2,6 +2,7 @@ import "./cardCollection";
 import CardCollection from "./cardCollection";
 import { loadCards } from "./loadCard";
 import "./canvasManager";
+import DragManager from "./dragManager";
 
 const drawContext = (<HTMLCanvasElement>(
   document.getElementById("draw-target")
@@ -10,6 +11,7 @@ const drawContext = (<HTMLCanvasElement>(
 drawContext.imageSmoothingEnabled = false;
 
 let collection: CardCollection = null;
+let dragManager: DragManager = null;
 
 function loop() {
   const shouldDraw = false;
@@ -28,6 +30,7 @@ async function run() {
   ]);
 
   collection = CardCollection.createDisplay(cardBack, [card]);
+  dragManager = new DragManager(collection);
 
   collection.cards[52].isFront = false;
 

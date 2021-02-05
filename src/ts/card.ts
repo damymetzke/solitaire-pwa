@@ -3,4 +3,5 @@ export default interface Card {
   isFront: boolean;
   left: number;
   top: number;
+  canDrag: boolean;
 }
