@@ -4,4 +4,5 @@ export default interface Card {
   left: number;
   top: number;
   canDrag: boolean;
+  isMoving: boolean;
 }

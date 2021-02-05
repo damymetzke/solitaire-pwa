@@ -1,4 +1,6 @@
-const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
+const canvasElement = <HTMLCanvasElement>(
+  document.getElementById("draw-target-move")
+);
 
 const WIDTH_IN_CARD_SPACE = 17;
 const HEIGHT_IN_CARD_SPACE =

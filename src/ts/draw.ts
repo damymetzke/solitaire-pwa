@@ -4,23 +4,52 @@ import { loadCards } from "./loadCard";
 import "./canvasManager";
 import DragManager from "./dragManager";
 
-const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
+const staticCanvasElement = <HTMLCanvasElement>(
+  document.getElementById("draw-target-static")
+);
+const moveCanvasElement = <HTMLCanvasElement>(
+  document.getElementById("draw-target-move")
+);
 
-const drawContext = canvasElement.getContext("2d");
+const staticDrawContext = staticCanvasElement.getContext("2d");
+const moveDrawContext = moveCanvasElement.getContext("2d");
 
-drawContext.imageSmoothingEnabled = false;
+staticDrawContext.imageSmoothingEnabled = false;
+moveDrawContext.imageSmoothingEnabled = false;
 
 let collection: CardCollection = null;
 let dragManager: DragManager = null;
 
 function loop() {
-  let shouldDraw = false;
+  let shouldDraw = 0;
 
-  shouldDraw ||= dragManager.drawUpdate();
+  shouldDraw = Math.max(shouldDraw, dragManager.drawUpdate());
 
-  if (shouldDraw) {
-    drawContext.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    collection.draw(drawContext);
+  if (shouldDraw === 1) {
+    moveDrawContext.clearRect(
+      0,
+      0,
+      moveCanvasElement.width,
+      moveCanvasElement.height
+    );
+    collection.drawDynamic(moveDrawContext);
+  }
+
+  if (shouldDraw === 2) {
+    staticDrawContext.clearRect(
+      0,
+      0,
+      staticCanvasElement.width,
+      staticCanvasElement.height
+    );
+    moveDrawContext.clearRect(
+      0,
+      0,
+      moveCanvasElement.width,
+      moveCanvasElement.height
+    );
+    collection.draw(staticDrawContext);
+    collection.drawDynamic(moveDrawContext);
   }
 
   requestAnimationFrame(loop);
@@ -36,8 +65,6 @@ async function run() {
   dragManager = new DragManager(collection);
 
   collection.cards[52].isFront = false;
-
-  collection.draw(drawContext);
 
   requestAnimationFrame(loop);
 }
