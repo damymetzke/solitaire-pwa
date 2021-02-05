@@ -1,5 +1,9 @@
 const canvasElement = <HTMLCanvasElement>document.getElementById("draw-target");
 
+const WIDTH_IN_CARD_SPACE = 15;
+const HEIGHT_IN_CARD_SPACE =
+  (WIDTH_IN_CARD_SPACE / canvasElement.width) * canvasElement.height;
+
 class CoordinateConverter {
   normalizedX: number;
   normalizedY: number;
@@ -22,6 +26,13 @@ class CoordinateConverter {
       this.normalizedY * canvasElement.height,
     ];
   }
+
+  toCard(): [number, number] {
+    return [
+      this.normalizedX * WIDTH_IN_CARD_SPACE,
+      this.normalizedY * HEIGHT_IN_CARD_SPACE,
+    ];
+  }
 }
 
 export function coordinatesFromScreen(
@@ -41,5 +52,15 @@ export function coordinatesFromCanvas(
   return new CoordinateConverter(
     canvasX / canvasElement.width,
     canvasY / canvasElement.height
+  );
+}
+
+export function coordinatesFromCard(
+  cardX: number,
+  cardY: number
+): CoordinateConverter {
+  return new CoordinateConverter(
+    cardX / WIDTH_IN_CARD_SPACE,
+    cardY / HEIGHT_IN_CARD_SPACE
   );
 }
