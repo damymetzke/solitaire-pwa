@@ -1,3 +1,4 @@
+import { coordinatesFromCard, coordinatesFromScreen } from "./canvasManager";
 import Card from "./card";
 
 export interface CardRect {
@@ -28,8 +29,10 @@ export default class CardCollection {
       this.cards.push({
         image: cardBackImage,
         isFront: true,
-        left: 400 * (i % 13) + 10,
-        top: Math.floor(i / 13) * 600 + 10,
+        left: 0,
+        top: 0,
+        // left: 400 * (i % 13) + 10,
+        // top: Math.floor(i / 13) * 600 + 10,
       });
     }
   }
@@ -48,13 +51,34 @@ export default class CardCollection {
     return result;
   }
 
+  static createDisplay(
+    cardBackImage: HTMLImageElement,
+    cardFrontImages: HTMLImageElement[]
+  ): CardCollection {
+    const result = this.createIncremental(53, cardBackImage, cardFrontImages);
+    result.cards.forEach((card, index) => {
+      card.left = (8 / 7) * (index % 13) + 1 / 7;
+      card.top = Math.floor(index / 13) * (8 / 7) * 1.5 + 1 / 7;
+    });
+
+    result.cards[52].left = 105 / 7;
+    result.cards[52].top = 1 / 7;
+
+    return result;
+  }
+
   draw(context: CanvasRenderingContext2D) {
     this.cards.forEach((card) => {
+      const [canvasWidth] = coordinatesFromCard(1, 1).toCanvas();
+      const [canvasX, canvasY] = coordinatesFromCard(
+        card.left,
+        card.top
+      ).toCanvas();
       drawCard(context, {
         img: card.isFront ? card.image : this.cardBackImage,
-        left: card.left,
-        top: card.top,
-        width: 350,
+        left: canvasX,
+        top: canvasY,
+        width: canvasWidth,
       });
     });
   }

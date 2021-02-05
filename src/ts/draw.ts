@@ -27,7 +27,7 @@ async function run() {
     (await import("../img/card-back.png")).default,
   ]);
 
-  collection = CardCollection.createIncremental(53, cardBack, [card]);
+  collection = CardCollection.createDisplay(cardBack, [card]);
 
   collection.cards[52].isFront = false;
 
