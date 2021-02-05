@@ -1,11 +1,4 @@
 import Card from "./card";
-import { loadCards } from "./loadCard";
-
-const drawContext = (<HTMLCanvasElement>(
-  document.getElementById("draw-target")
-)).getContext("2d");
-
-drawContext.imageSmoothingEnabled = false;
 
 export interface CardRect {
   img: HTMLImageElement;
@@ -66,18 +59,3 @@ export default class CardCollection {
     });
   }
 }
-
-async function run() {
-  const [card, cardBack] = await loadCards([
-    (await import("../img/card.png")).default,
-    (await import("../img/card-back.png")).default,
-  ]);
-
-  const collection = CardCollection.createIncremental(53, cardBack, [card]);
-
-  collection.cards[52].isFront = false;
-
-  collection.draw(drawContext);
-}
-
-run();
