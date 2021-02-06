@@ -1,6 +1,7 @@
 import { coordinatesFromScreen } from "./canvasManager";
 import Card from "./card";
 import CardCollection from "./cardCollection";
+import { DrawState } from "./drawState";
 
 const canvasElement = <HTMLCanvasElement>(
   document.getElementById("draw-target-move")
@@ -8,7 +9,7 @@ const canvasElement = <HTMLCanvasElement>(
 
 export default class DragManager {
   collection: CardCollection;
-  dirty = 2;
+  dirty = DrawState.ALL;
   draggingCard: Card = null;
   draggingOffsetX = 0;
   draggingOffsetY = 0;
@@ -28,9 +29,9 @@ export default class DragManager {
     });
   }
 
-  drawUpdate(): number {
+  drawUpdate(): DrawState {
     const result = this.dirty;
-    this.dirty = 0;
+    this.dirty = DrawState.NONE;
     return result;
   }
 
@@ -60,7 +61,7 @@ export default class DragManager {
         card.isMoving = true;
         this.draggingOffsetX = -(cardX - card.left);
         this.draggingOffsetY = -(cardY - card.top);
-        this.dirty = 2;
+        this.dirty = DrawState.ALL;
 
         break;
       }
@@ -72,7 +73,7 @@ export default class DragManager {
       return;
     }
 
-    this.dirty = Math.max(1, this.dirty);
+    this.dirty = Math.max(DrawState.MOVE_ONLY, this.dirty);
     const [cardX, cardY] = coordinatesFromScreen(
       event.offsetX,
       event.offsetY
@@ -89,6 +90,6 @@ export default class DragManager {
 
     this.draggingCard.isMoving = false;
     this.draggingCard = null;
-    this.dirty = 2;
+    this.dirty = DrawState.ALL;
   }
 }

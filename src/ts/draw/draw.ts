@@ -3,6 +3,7 @@ import CardCollection from "./cardCollection";
 import { loadCards } from "./loadCard";
 import "./canvasManager";
 import DragManager from "./dragManager";
+import { DrawState } from "./drawState";
 
 const staticCanvasElement = <HTMLCanvasElement>(
   document.getElementById("draw-target-static")
@@ -21,11 +22,11 @@ let collection: CardCollection = null;
 let dragManager: DragManager = null;
 
 function loop() {
-  let shouldDraw = 0;
+  let shouldDraw = DrawState.NONE;
 
   shouldDraw = Math.max(shouldDraw, dragManager.drawUpdate());
 
-  if (shouldDraw === 1) {
+  if (shouldDraw === DrawState.MOVE_ONLY) {
     moveDrawContext.clearRect(
       0,
       0,
@@ -35,7 +36,7 @@ function loop() {
     collection.drawMove(moveDrawContext);
   }
 
-  if (shouldDraw === 2) {
+  if (shouldDraw === DrawState.ALL) {
     staticDrawContext.clearRect(
       0,
       0,
