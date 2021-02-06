@@ -1,6 +1,6 @@
 import "./cardCollection";
 import CardCollection from "./cardCollection";
-import { loadCards } from "./loadCard";
+import { batchLoadCards } from "./loadCard";
 import "./canvasManager";
 import DragManager from "./dragManager";
 import { DrawState } from "./drawState";
@@ -57,15 +57,13 @@ function loop() {
 }
 
 async function run() {
-  const cardSources = (
-    await Promise.all([
-      import("../../img/card.png"),
-      import("../../img/card-back.png"),
-    ])
-  ).map((cardSource): string => cardSource.default);
-  const [card, cardBack] = await loadCards(cardSources);
+  const cardSources = [
+    import("../../img/card-back.png"),
+    import("../../img/card.png"),
+  ];
+  const [cardBack, cards] = await batchLoadCards(cardSources);
 
-  collection = CardCollection.createDisplay(cardBack, [card]);
+  collection = CardCollection.createDisplay(cardBack, cards);
   dragManager = new DragManager(collection);
 
   collection.cards[52].isFront = false;
