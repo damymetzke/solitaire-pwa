@@ -57,10 +57,13 @@ function loop() {
 }
 
 async function run() {
-  const [card, cardBack] = await loadCards([
-    (await import("../../img/card.png")).default,
-    (await import("../../img/card-back.png")).default,
-  ]);
+  const cardSources = (
+    await Promise.all([
+      import("../../img/card.png"),
+      import("../../img/card-back.png"),
+    ])
+  ).map((cardSource): string => cardSource.default);
+  const [card, cardBack] = await loadCards(cardSources);
 
   collection = CardCollection.createDisplay(cardBack, [card]);
   dragManager = new DragManager(collection);
