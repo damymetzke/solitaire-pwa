@@ -32,7 +32,7 @@ function loop() {
       moveCanvasElement.width,
       moveCanvasElement.height
     );
-    collection.drawDynamic(moveDrawContext);
+    collection.drawMove(moveDrawContext);
   }
 
   if (shouldDraw === 2) {
@@ -48,8 +48,8 @@ function loop() {
       moveCanvasElement.width,
       moveCanvasElement.height
     );
-    collection.draw(staticDrawContext);
-    collection.drawDynamic(moveDrawContext);
+    collection.drawStatic(staticDrawContext);
+    collection.drawMove(moveDrawContext);
   }
 
   requestAnimationFrame(loop);
