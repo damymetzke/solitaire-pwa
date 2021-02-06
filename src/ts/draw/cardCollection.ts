@@ -68,7 +68,21 @@ export default class CardCollection {
     return result;
   }
 
-  draw(context: CanvasRenderingContext2D) {
+  /**
+   * @deprecated use drawStatic instead
+   */
+  draw(context: CanvasRenderingContext2D): void {
+    this.drawStatic(context);
+  }
+
+  /**
+   * @deprecated use drawMove instead
+   */
+  drawDynamic(context: CanvasRenderingContext2D): void {
+    this.drawMove(context);
+  }
+
+  drawStatic(context: CanvasRenderingContext2D): void {
     this.cards.forEach((card) => {
       if (card.isMoving) {
         return;
@@ -87,7 +101,7 @@ export default class CardCollection {
     });
   }
 
-  drawDynamic(context: CanvasRenderingContext2D) {
+  drawMove(context: CanvasRenderingContext2D): void {
     this.cards.forEach((card) => {
       if (!card.isMoving) {
         return;
