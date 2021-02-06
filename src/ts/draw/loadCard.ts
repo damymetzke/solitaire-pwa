@@ -15,3 +15,13 @@ export function loadCards(sources: string[]): Promise<HTMLImageElement[]> {
 
   return Promise.all(result);
 }
+
+export async function batchLoadCards(
+  sources: Promise<{ default: string }>[]
+): Promise<[HTMLImageElement, HTMLImageElement[]]> {
+  const convertedSources = (await Promise.all(sources)).map(
+    (source) => source.default
+  );
+  const result = await loadCards(convertedSources);
+  return [result[0], result.slice(1)];
+}
