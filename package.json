@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "parcel serve ./src/html/index.html --out-dir build",
     "dist": "parcel build ./src/html/index.html --out-dir dist --no-source-maps",
+    "dist-netlify": "node ./buildScripts/distNetlify.js",
     "setup-cmake": "emcmake cmake -S . -B ./cmakeBuild",
     "build-cmake": "make -C ./cmakeBuild",
     "test": "jest",
