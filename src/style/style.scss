@@ -1,5 +1,12 @@
-p::after {
-  content: "Hello World!";
-  color: hsl(90, 53%, 66%);
-  background-color: hsl(270, 88%, 36%);
+#draw-target-static,
+#draw-target-move {
+  border: 1px solid black;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#canvas-container {
+  position: relative;
 }

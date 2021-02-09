@@ -1,5 +1,9 @@
 import "../style/style.scss";
 
+import * as solitaire from "./solitaire/solitaire";
+import { start as startFuture } from "./future/futureInterface";
+import "./draw/draw";
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
@@ -17,3 +21,14 @@ if ("serviceWorker" in navigator) {
       );
   });
 }
+
+async function run() {
+  const [future] = await Promise.all([
+    startFuture(),
+    solitaire.waitUntilLoaded(),
+  ]);
+  console.log(solitaire.ping());
+  console.log(await future.ping());
+}
+
+run();

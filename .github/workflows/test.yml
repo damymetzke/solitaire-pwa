@@ -1,14 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build
+name: Run Tests
 
 on:
-  schedule:
-    - cron: 0 0 * * *
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,7 +24,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - uses: mymindstorm/setup-emsdk@v8
-      - run: npm run setup-cmake
-      - run: npm run build-cmake
-      - run: npm run dist
+      - run: npm test

@@ -1,6 +1,9 @@
 node_modules/
 build/
 dist/
+emsdk/
+
+cmakeBuild/
 
 # cache diretories
 .cache/
