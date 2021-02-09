@@ -37,6 +37,7 @@ async function run() {
     ]);
     await runCommand("./emsdk", ["install", "latest"], "./emsdk");
     await runCommand("./emsdk", ["activate", "latest"], "./emsdk");
+    await runCommand("apt-get", ["install", "cmake"]);
     await runCommand("npm", ["run", "setup-cmake"]);
     await runCommand("npm", ["run", "build-cmake"]);
     await runCommand("npm", ["run", "dist"]);
