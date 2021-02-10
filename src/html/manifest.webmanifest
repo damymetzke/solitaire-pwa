@@ -1,7 +1,7 @@
 {
-  "name": "Solitair PWA",
-  "short_name": "Solitair",
-  "description": "Solitair app powered by PWA and WASM technology",
+  "name": "Solitaire PWA",
+  "short_name": "Solitaire",
+  "description": "Solitaire app powered by PWA and WASM technology",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
