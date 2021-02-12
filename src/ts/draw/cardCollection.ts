@@ -58,6 +58,29 @@ export default class CardCollection {
     }
   }
 
+  cardExists(stack: number, index: number): boolean {
+    if (stack >= this.cards.length) {
+      return false;
+    }
+
+    return index < this.cards[stack].length;
+  }
+
+  getCard(stack: number, index: number): Card {
+    return this.cards[stack][index];
+  }
+
+  forEachCard(
+    callback: (
+      value: Card,
+      totalIndex: number,
+      outterIndex: number,
+      innerIndex: number
+    ) => void
+  ): void {
+    forEachDouble(this.cards, callback);
+  }
+
   static createDisplay(
     cardBackImage: HTMLImageElement,
     cardFrontImages: HTMLImageElement[]
