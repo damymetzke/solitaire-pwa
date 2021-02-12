@@ -17,59 +17,68 @@ function drawCard(
   context.drawImage(img, left, top, width, width * 1.5);
 }
 
+function forEachDouble<T>(
+  array: T[][],
+  callback: (
+    value: T,
+    totalIndex: number,
+    outterIndex: number,
+    innerIndex: number
+  ) => void
+) {
+  let totalIndex = 0;
+  array.forEach((innerArray, outerIndex) => {
+    innerArray.forEach((value, innerIndex) => {
+      callback(value, totalIndex++, outerIndex, innerIndex);
+    });
+  });
+}
+
 export default class CardCollection {
-  cards: Card[];
+  cards: Card[][];
 
   cardBackImage: HTMLImageElement;
 
-  constructor(numCards: number, cardBackImage: HTMLImageElement) {
+  constructor(numCards: number[], cardBackImage: HTMLImageElement) {
     this.cardBackImage = cardBackImage;
     this.cards = [];
-    for (let i = 0; i < numCards; ++i) {
-      this.cards.push({
-        image: cardBackImage,
-        isFront: true,
-        left: 0,
-        top: 0,
-        canDrag: false,
-        isMoving: false,
-      });
+    for (let i = 0; i < numCards.length; ++i) {
+      const currentNumCards = numCards[i];
+      this.cards.push([]);
+      for (let j = 0; j < currentNumCards; ++j) {
+        this.cards[this.cards.length - 1].push({
+          image: cardBackImage,
+          isFront: true,
+          left: 0,
+          top: 0,
+          canDrag: false,
+          isMoving: false,
+        });
+      }
     }
-  }
-
-  static createIncremental(
-    numCards: number,
-    cardBackImage: HTMLImageElement,
-    cardFrontImages: HTMLImageElement[]
-  ): CardCollection {
-    const result = new CardCollection(numCards, cardBackImage);
-
-    for (let i = 0; i < numCards; ++i) {
-      result.cards[i].image = cardFrontImages[i % cardFrontImages.length];
-    }
-
-    return result;
   }
 
   static createDisplay(
     cardBackImage: HTMLImageElement,
     cardFrontImages: HTMLImageElement[]
   ): CardCollection {
-    const result = this.createIncremental(53, cardBackImage, cardFrontImages);
-    result.cards.forEach((card, index) => {
+    const result = new CardCollection([13, 13, 13, 14], cardBackImage);
+    forEachDouble(result.cards, (card, index) => {
+      card.image = cardFrontImages[index % cardFrontImages.length];
       card.left = (8 / 7) * (index % 13) + 1 / 7;
       card.top = Math.floor(index / 13) * (8 / 7) * 1.5 + 1 / 7;
       card.canDrag = true;
     });
-
-    result.cards[52].left = 105 / 7;
-    result.cards[52].top = 1 / 7;
+    result.cards[0].push(result.cards[3][13]);
+    result.cards[3].pop();
+    result.cards[0][13].left = 105 / 7;
+    result.cards[0][13].top = 1 / 7;
 
     return result;
   }
 
   drawStatic(context: CanvasRenderingContext2D): void {
-    this.cards.forEach((card) => {
+    forEachDouble(this.cards, (card) => {
       if (card.isMoving) {
         return;
       }
@@ -88,7 +97,7 @@ export default class CardCollection {
   }
 
   drawMove(context: CanvasRenderingContext2D): void {
-    this.cards.forEach((card) => {
+    forEachDouble(this.cards, (card) => {
       if (!card.isMoving) {
         return;
       }

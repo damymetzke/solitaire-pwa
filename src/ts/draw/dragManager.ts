@@ -49,21 +49,23 @@ export default class DragManager {
     ).toCard();
 
     for (let i = this.collection.cards.length - 1; i >= 0; --i) {
-      const card = this.collection.cards[i];
-      if (
-        card.canDrag &&
-        cardX > card.left &&
-        cardX < card.left + 1 &&
-        cardY > card.top &&
-        cardY < card.top + 1.5
-      ) {
-        this.draggingCard = card;
-        card.isMoving = true;
-        this.draggingOffsetX = -(cardX - card.left);
-        this.draggingOffsetY = -(cardY - card.top);
-        this.dirty = DrawState.ALL;
-
-        break;
+      const stack = this.collection.cards[i];
+      for (let j = stack.length - 1; j >= 0; --j) {
+        const card = stack[j];
+        if (
+          card.canDrag &&
+          cardX > card.left &&
+          cardX < card.left + 1 &&
+          cardY > card.top &&
+          cardY < card.top + 1.5
+        ) {
+          this.draggingCard = card;
+          card.isMoving = true;
+          this.draggingOffsetX = -(cardX - card.left);
+          this.draggingOffsetY = -(cardY - card.top);
+          this.dirty = DrawState.ALL;
+          break;
+        }
       }
     }
   }
