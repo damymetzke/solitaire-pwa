@@ -63,16 +63,17 @@ export default class CardCollection {
     cardFrontImages: HTMLImageElement[]
   ): CardCollection {
     const result = new CardCollection([13, 13, 13, 14], cardBackImage);
-    forEachDouble(result.cards, (card, index) => {
+    forEachDouble(result.cards, (card, index, outterIndex, innerIndex) => {
       card.image = cardFrontImages[index % cardFrontImages.length];
-      card.left = (8 / 7) * (index % 13) + 1 / 7;
-      card.top = Math.floor(index / 13) * (8 / 7) * 1.5 + 1 / 7;
+      card.left = (8 / 7) * innerIndex + 1 / 7;
+      card.top = outterIndex * (8 / 7) * 1.5 + 1 / 7;
       card.canDrag = true;
     });
     result.cards[0].push(result.cards[3][13]);
     result.cards[3].pop();
     result.cards[0][13].left = 105 / 7;
     result.cards[0][13].top = 1 / 7;
+    result.cards[0][13].isFront = false;
 
     return result;
   }
