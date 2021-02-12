@@ -66,8 +66,6 @@ async function run() {
   collection = CardCollection.createDisplay(cardBack, cards);
   dragManager = new DragManager(collection);
 
-  collection.cards[0][13].isFront = false;
-
   requestAnimationFrame(loop);
 }
 
