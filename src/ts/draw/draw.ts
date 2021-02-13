@@ -4,6 +4,7 @@ import { batchLoadCards } from "./loadCard";
 import "./canvasManager";
 import DragManager from "./dragManager";
 import { DrawState } from "./drawState";
+import StackHandler from "../stack/stackHandler";
 
 const staticCanvasElement = <HTMLCanvasElement>(
   document.getElementById("draw-target-static")
@@ -20,6 +21,7 @@ moveDrawContext.imageSmoothingEnabled = false;
 
 let collection: CardCollection = null;
 let dragManager: DragManager = null;
+let stackHandler: StackHandler = null;
 
 function loop() {
   let shouldDraw = DrawState.NONE;
@@ -63,7 +65,8 @@ async function run() {
   ];
   const [cardBack, cards] = await batchLoadCards(cardSources);
 
-  collection = CardCollection.createDisplay(cardBack, cards);
+  stackHandler = new StackHandler(cardBack, cards);
+  collection = stackHandler.collection;
   dragManager = new DragManager(collection);
 
   requestAnimationFrame(loop);

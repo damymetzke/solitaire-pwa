@@ -15,6 +15,13 @@ interface MoveCommand {
 export default class StackHandler {
   moveCommands: MoveCommand[];
   collection: CardCollection;
+
+  constructor(cardBackImage: HTMLImageElement, cardImages: HTMLImageElement[]) {
+    this.collection = new CardCollection([2], cardBackImage);
+    this.collection.cards[0][0].canDrag = true;
+    this.collection.cards[0][1].canDrag = true;
+  }
+
   getHome(stack: number, index: number): [number, number] {
     return [0, 0];
   }
