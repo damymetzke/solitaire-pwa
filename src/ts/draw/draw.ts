@@ -24,10 +24,11 @@ let collection: CardCollection = null;
 let dragManager: DragManager = null;
 let stackHandler: StackHandler = null;
 
-function loop() {
+function loop(delta: number) {
   let shouldDraw = DrawState.NONE;
 
   shouldDraw = Math.max(shouldDraw, dragManager.drawUpdate());
+  shouldDraw = Math.max(shouldDraw, stackHandler.drawUpdate(delta));
 
   if (shouldDraw === DrawState.MOVE_ONLY) {
     moveDrawContext.clearRect(
@@ -68,7 +69,7 @@ async function run() {
 
   stackHandler = new DisplayStackHandler(cardBack, cards);
   collection = stackHandler.collection;
-  dragManager = new DragManager(collection);
+  dragManager = new DragManager(collection, stackHandler);
 
   requestAnimationFrame(loop);
 }

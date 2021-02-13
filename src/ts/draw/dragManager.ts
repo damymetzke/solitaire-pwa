@@ -1,3 +1,4 @@
+import StackHandler from "../stack/stackHandler";
 import { coordinatesFromScreen } from "./canvasManager";
 import Card from "./card";
 import CardCollection from "./cardCollection";
@@ -9,13 +10,15 @@ const canvasElement = <HTMLCanvasElement>(
 
 export default class DragManager {
   collection: CardCollection;
+  stackHandler: StackHandler;
   dirty = DrawState.ALL;
   draggingCard: Card = null;
   draggingOffsetX = 0;
   draggingOffsetY = 0;
 
-  constructor(collection: CardCollection) {
+  constructor(collection: CardCollection, stackHandler: StackHandler) {
     this.collection = collection;
+    this.stackHandler = stackHandler;
 
     canvasElement.addEventListener("mousedown", (event) => {
       this.onMouseDown(event);
@@ -90,7 +93,8 @@ export default class DragManager {
       return;
     }
 
-    this.draggingCard.isMoving = false;
+    const [stackIndex, cardIndex] = this.collection.findCard(this.draggingCard);
+    this.stackHandler.moveToHome(stackIndex, cardIndex);
     this.draggingCard = null;
     this.dirty = DrawState.ALL;
   }
