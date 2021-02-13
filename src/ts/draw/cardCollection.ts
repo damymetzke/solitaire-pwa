@@ -70,6 +70,16 @@ export default class CardCollection {
     return this.cards[stack][index];
   }
 
+  findCard(card: Card): [number, number] | null {
+    let result = null;
+    this.forEachCard((cardPossibility, _index, stack, cardIndex) => {
+      if (card === cardPossibility) {
+        result = [stack, cardIndex];
+      }
+    });
+    return result;
+  }
+
   forEachCard(
     callback: (
       value: Card,
