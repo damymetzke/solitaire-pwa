@@ -23,8 +23,12 @@ moveDrawContext.imageSmoothingEnabled = false;
 let collection: CardCollection = null;
 let dragManager: DragManager = null;
 let stackHandler: StackHandler = null;
+let previousTime: DOMHighResTimeStamp = 0;
 
-function loop(delta: number) {
+function loop(time: number) {
+  const delta = time - previousTime;
+  previousTime = time;
+
   let shouldDraw = DrawState.NONE;
 
   shouldDraw = Math.max(shouldDraw, dragManager.drawUpdate());
@@ -71,6 +75,7 @@ async function run() {
   collection = stackHandler.collection;
   dragManager = new DragManager(collection, stackHandler);
 
+  previousTime = performance.now();
   requestAnimationFrame(loop);
 }
 

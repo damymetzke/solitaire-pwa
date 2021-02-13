@@ -75,7 +75,7 @@ export default class StackHandler {
     }
     this.moveCommands = this.moveCommands.filter((command) => {
       command.progress = Math.min(
-        command.progress + delta / command.length / 5000,
+        command.progress + delta / command.length / 50,
         1
       );
       command.card.top =
