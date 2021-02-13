@@ -3,6 +3,11 @@ import StackHandler from "./stackHandler";
 export default class DisplayStackHandler extends StackHandler {
   constructor(cardBackImage: HTMLImageElement, cardImages: HTMLImageElement[]) {
     super([13, 13, 13, 14], cardBackImage);
+    this.collection.forEachCard((card, index) => {
+      card.isFront = index === 52 ? false : true;
+      card.image = cardImages[index % cardImages.length];
+      card.canDrag = true;
+    });
   }
 
   getHome(stack: number, index: number): [number, number] {
