@@ -78,6 +78,10 @@ export default class StackHandler {
         command.progress + delta / command.length / 50,
         1
       );
+      const smoothProgress = Math.max(
+        0,
+        Math.min(1, 3 * command.progress ** 2 - 2 * command.progress ** 3)
+      );
       command.card.top =
         command.startY + command.progress * (command.endY - command.startY);
       command.card.left =
