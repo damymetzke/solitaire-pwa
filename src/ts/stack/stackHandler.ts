@@ -73,7 +73,7 @@ export default class StackHandler {
       this.dirty = DrawState.NONE;
       return result;
     }
-    this.moveCommands.filter((command) => {
+    this.moveCommands = this.moveCommands.filter((command) => {
       command.progress = Math.min(
         command.progress + delta / command.length / 5000,
         1
