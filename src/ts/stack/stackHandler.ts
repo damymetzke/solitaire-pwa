@@ -16,10 +16,13 @@ export default class StackHandler {
   moveCommands: MoveCommand[];
   collection: CardCollection;
 
-  constructor(cardBackImage: HTMLImageElement, cardImages: HTMLImageElement[]) {
-    this.collection = new CardCollection([2], cardBackImage);
-    this.collection.cards[0][0].canDrag = true;
-    this.collection.cards[0][1].canDrag = true;
+  constructor(numCards: number[], cardBackImage: HTMLImageElement) {
+    this.collection = new CardCollection(numCards, cardBackImage);
+    this.collection.forEachCard((card, _index, stackIndex, cardIndex) => {
+      const [homeX, homeY] = this.getHome(stackIndex, cardIndex);
+      card.left = homeX;
+      card.top = homeY;
+    });
   }
 
   getHome(stack: number, index: number): [number, number] {
