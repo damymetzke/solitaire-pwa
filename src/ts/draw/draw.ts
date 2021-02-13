@@ -5,6 +5,7 @@ import "./canvasManager";
 import DragManager from "./dragManager";
 import { DrawState } from "./drawState";
 import StackHandler from "../stack/stackHandler";
+import DisplayStackHandler from "../stack/displayStackHandler";
 
 const staticCanvasElement = <HTMLCanvasElement>(
   document.getElementById("draw-target-static")
@@ -65,7 +66,7 @@ async function run() {
   ];
   const [cardBack, cards] = await batchLoadCards(cardSources);
 
-  stackHandler = new StackHandler(cardBack, cards);
+  stackHandler = new DisplayStackHandler(cardBack, cards);
   collection = stackHandler.collection;
   dragManager = new DragManager(collection);
 
