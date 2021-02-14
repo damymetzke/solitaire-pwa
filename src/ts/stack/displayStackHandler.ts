@@ -27,4 +27,14 @@ export default class DisplayStackHandler extends StackHandler {
     }
     return [(8 / 7) * index + 1 / 7, (8 / 7) * stack * 1.5 + 1 / 7];
   }
+
+  attemptMove(
+    [sourceStack, sourceCard]: [number, number],
+    target: number
+  ): string {
+    if (sourceStack === target) {
+      return "~;";
+    }
+    return `${sourceStack},${sourceCard}:${target}`;
+  }
 }
