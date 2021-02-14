@@ -12,10 +12,19 @@ interface MoveCommand {
   progress: number;
 }
 
+interface DropZone {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  stack: number;
+}
+
 export default class StackHandler {
   moveCommands: MoveCommand[] = [];
   collection: CardCollection = null;
   dirty: DrawState = DrawState.NONE;
+  dropZones: DropZone[] = [];
 
   constructor(numCards: number[], cardBackImage: HTMLImageElement) {
     this.collection = new CardCollection(numCards, cardBackImage);
@@ -24,6 +33,22 @@ export default class StackHandler {
       card.left = homeX;
       card.top = homeY;
     });
+  }
+
+  dropAt(x: number, y: number) {
+    const dropTarget = this.dropZones.find((dropZone) => {
+      return (
+        x >= dropZone.x &&
+        y >= dropZone.y &&
+        x <= dropZone.x + dropZone.width &&
+        y <= dropZone.y + dropZone.height
+      );
+    });
+    if (dropTarget === undefined) {
+      return;
+    }
+
+    console.log(`Drop at ${dropTarget.stack}`);
   }
 
   getHome(stack: number, index: number): [number, number] {
