@@ -8,6 +8,16 @@ export default class DisplayStackHandler extends StackHandler {
       card.image = cardImages[index % cardImages.length];
       card.canDrag = true;
     });
+
+    for (let i = 0; i < 4; ++i) {
+      this.dropZones.push({
+        x: 1 / 7,
+        y: (8 / 7) * 1.5 * i + 1 / 7,
+        width: 15,
+        height: 1.5,
+        stack: i,
+      });
+    }
   }
 
   getHome(stack: number, index: number): [number, number] {

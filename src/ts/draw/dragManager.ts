@@ -93,6 +93,16 @@ export default class DragManager {
       return;
     }
 
+    const [dropX, dropY] = coordinatesFromScreen(
+      event.offsetX,
+      event.offsetY
+    ).toCard();
+
+    this.stackHandler.dropAt(
+      dropX + this.draggingOffsetX,
+      dropY + this.draggingOffsetY
+    );
+
     const [stackIndex, cardIndex] = this.collection.findCard(this.draggingCard);
     this.stackHandler.moveToHome(stackIndex, cardIndex);
     this.draggingCard = null;
