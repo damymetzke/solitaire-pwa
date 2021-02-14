@@ -53,7 +53,44 @@ export default class StackHandler {
     const actualMoves = individualMoves.filter((move) => {
       return move !== "" && move !== "~";
     });
-    console.log(actualMoves);
+
+    const shouldAnimate = new Set<string>();
+
+    actualMoves.forEach((move) => {
+      const [sourceStack, sourceCard, target] = move
+        .split(/[,:]/g)
+        .filter((part) => part !== "")
+        .map((part) => parseInt(part));
+      const sourcePattern = `${sourceStack},${sourceCard}`;
+      if (shouldAnimate.has(sourcePattern)) {
+        shouldAnimate.delete(sourcePattern);
+      }
+
+      shouldAnimate.add(`${target},${this.collection.cards[target].length}`);
+
+      this.collection.cards[target].push(
+        this.collection.cards[sourceStack][sourceCard]
+      );
+
+      for (
+        let i = sourceCard + 1;
+        i < this.collection.cards[sourceStack].length;
+        ++i
+      ) {
+        this.collection.cards[sourceStack][i - 1] = this.collection.cards[
+          sourceStack
+        ][i];
+        shouldAnimate.add(`${sourceStack},${i - 1}`);
+      }
+
+      this.collection.cards[sourceStack].pop();
+    });
+    shouldAnimate.forEach((animate) => {
+      const [stackIndex, cardIndex] = animate
+        .split(",")
+        .map((value) => parseInt(value));
+      this.moveToHome(stackIndex, cardIndex);
+    });
   }
 
   attemptMove(source: [number, number], target: number): string {
