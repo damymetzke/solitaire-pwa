@@ -35,7 +35,7 @@ export default class StackHandler {
     });
   }
 
-  dropAt(x: number, y: number) {
+  dropAt(x: number, y: number, source: [number, number]) {
     const dropTarget = this.dropZones.find((dropZone) => {
       return (
         x >= dropZone.x &&
@@ -48,7 +48,16 @@ export default class StackHandler {
       return;
     }
 
-    console.log(`Drop at ${dropTarget.stack}`);
+    const moves = this.attemptMove(source, dropTarget.stack);
+    const individualMoves = moves.split(/[;/]/g);
+    const actualMoves = individualMoves.filter((move) => {
+      return move !== "" && move !== "~";
+    });
+    console.log(actualMoves);
+  }
+
+  attemptMove(source: [number, number], target: number): string {
+    return "~;";
   }
 
   getHome(stack: number, index: number): [number, number] {
