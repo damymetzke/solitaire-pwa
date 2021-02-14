@@ -93,6 +93,8 @@ export default class DragManager {
       return;
     }
 
+    const cardPosition = this.collection.findCard(this.draggingCard);
+
     const [dropX, dropY] = coordinatesFromScreen(
       event.offsetX,
       event.offsetY
@@ -100,7 +102,8 @@ export default class DragManager {
 
     this.stackHandler.dropAt(
       dropX + this.draggingOffsetX,
-      dropY + this.draggingOffsetY
+      dropY + this.draggingOffsetY,
+      cardPosition
     );
 
     const [stackIndex, cardIndex] = this.collection.findCard(this.draggingCard);
