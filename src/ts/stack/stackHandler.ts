@@ -83,9 +83,9 @@ export default class StackHandler {
         Math.min(1, 3 * command.progress ** 2 - 2 * command.progress ** 3)
       );
       command.card.top =
-        command.startY + command.progress * (command.endY - command.startY);
+        command.startY + smoothProgress * (command.endY - command.startY);
       command.card.left =
-        command.startX + command.progress * (command.endX - command.startX);
+        command.startX + smoothProgress * (command.endX - command.startX);
       if (command.progress < 1) {
         return true;
       }
