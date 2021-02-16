@@ -44,7 +44,7 @@ export default class MoveNotationDecoder {
           },
           sourceStack: sourceStack,
           sourceCard: sourceCard,
-          target: parseInt(target),
+          target: target !== undefined ? parseInt(target) : null,
         };
       });
     });
