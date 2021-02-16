@@ -21,7 +21,7 @@ export default class MoveNotationDecoder {
       .map((move) => {
         return move
           .split("/")
-          .filter((subMove) => subMove !== "" && move !== "~")
+          .filter((subMove) => subMove !== "" && subMove !== "~")
           .map((subMove) => {
             let currentlyParsing = subMove;
             const modifiers: Record<string, boolean> = {
@@ -53,7 +53,8 @@ export default class MoveNotationDecoder {
               target: target !== undefined ? parseInt(target) : null,
             };
           });
-      });
+      })
+      .filter((value) => value.length > 0);
 
     if (this.moves.length === 0) {
       this.moves = null;

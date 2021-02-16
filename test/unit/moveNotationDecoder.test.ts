@@ -65,4 +65,5 @@ test("MoveNotationDecoder can handle modifiers, sources and targets.", () => {
 
 test("MoveNotationDecoder can handle null operations.", () => {
   expect("~;").toResolveToMoves(null);
+  expect("~/~;~/~/;").toResolveToMoves(null);
 });
