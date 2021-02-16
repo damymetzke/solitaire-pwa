@@ -1,7 +1,18 @@
 import CardCollection from "../draw/cardCollection";
 
+interface Move {
+  modifiers: {
+    turnToFront: boolean;
+    allowToMove: boolean;
+    doNotAllowToMove: boolean;
+  };
+  sourceStack: number;
+  sourceCard: number;
+  target: number;
+}
+
 export default class MoveNotationDecoder {
-  moves: any[][] = null;
+  moves: Move[][] = null;
 
   constructor(toDecode: string, collection: CardCollection) {
     this.moves = toDecode.split(";").map((move) => {
@@ -25,9 +36,12 @@ export default class MoveNotationDecoder {
           .split(",")
           .filter((value) => value !== "")
           .map((value) => parseInt(value));
-        console.log(source, target, sourceStack, sourceCard);
         return {
-          modifiers: modifiers,
+          modifiers: {
+            turnToFront: modifiers["*"],
+            allowToMove: modifiers["!"],
+            doNotAllowToMove: modifiers["?"],
+          },
           sourceStack: sourceStack,
           sourceCard: sourceCard,
           target: parseInt(target),

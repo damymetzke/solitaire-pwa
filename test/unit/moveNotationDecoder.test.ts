@@ -7,9 +7,9 @@ test("Move notation decoder can handle modifiers, sources and targets", () => {
     [
       {
         modifiers: {
-          "*": false,
-          "!": false,
-          "?": false,
+          turnToFront: false,
+          allowToMove: false,
+          doNotAllowToMove: false,
         },
         sourceStack: 0,
         sourceCard: 0,
