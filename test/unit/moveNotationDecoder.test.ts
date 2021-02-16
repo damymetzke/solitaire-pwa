@@ -65,5 +65,18 @@ test("MoveNotationDecoder can handle modifiers, sources and targets.", () => {
 
 test("MoveNotationDecoder can handle null operations.", () => {
   expect("~;").toResolveToMoves(null);
-  expect("~/~;~/~/;").toResolveToMoves(null);
+  expect("~/~;~/~;").toResolveToMoves(null);
+  expect("~/~;~/~/?1,2:4;").toResolveToMoves([
+    [[[1, 2], 4, [false, false, true]]],
+  ]);
+});
+
+test("MoveNotationDecoder can handle multiple inputs.", () => {
+  expect("?1,3:9/*1,2;!2,2;").toResolveToMoves([
+    [
+      [[1, 3], 9, [false, false, true]],
+      [[1, 2], null, [true, false, false]],
+    ],
+    [[[2, 2], null, [false, true, false]]],
+  ]);
 });
