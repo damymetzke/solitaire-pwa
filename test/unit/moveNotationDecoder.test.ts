@@ -51,7 +51,7 @@ expect.extend({
 });
 
 test("Move notation decoder can handle modifiers, sources and targets", () => {
-  expect("0,0:1").toResolveToMoves([0, 0], 1, [false, false, false]);
-  expect("*!1,2").toResolveToMoves([1, 2], null, [true, true, false]);
-  expect("!5,3:4").toResolveToMoves([5, 3], 4, [false, true, false]);
+  expect("0,0:1;").toResolveToMoves([0, 0], 1, [false, false, false]);
+  expect("*!1,2;").toResolveToMoves([1, 2], null, [true, true, false]);
+  expect("!5,3:4;").toResolveToMoves([5, 3], 4, [false, true, false]);
 });
