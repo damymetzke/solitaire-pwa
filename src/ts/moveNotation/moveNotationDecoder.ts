@@ -17,11 +17,11 @@ export default class MoveNotationDecoder {
   constructor(toDecode: string, collection: CardCollection) {
     this.moves = toDecode
       .split(";")
-      .filter((move) => move !== "")
+      .filter((move) => move !== "" && move !== "~")
       .map((move) => {
         return move
           .split("/")
-          .filter((subMove) => subMove !== "")
+          .filter((subMove) => subMove !== "" && move !== "~")
           .map((subMove) => {
             let currentlyParsing = subMove;
             const modifiers: Record<string, boolean> = {
@@ -36,7 +36,7 @@ export default class MoveNotationDecoder {
 
             const [source, target] = currentlyParsing
               .split(":")
-              .filter((value) => value !== "" && value !== "~");
+              .filter((value) => value !== "");
 
             const [sourceStack, sourceCard] = source
               .split(",")
@@ -54,5 +54,9 @@ export default class MoveNotationDecoder {
             };
           });
       });
+
+    if (this.moves.length === 0) {
+      this.moves = null;
+    }
   }
 }
