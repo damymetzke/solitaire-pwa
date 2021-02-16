@@ -4,9 +4,7 @@ declare global {
   namespace jest {
     interface Matchers<R> {
       toResolveToMoves: (
-        [sourceStack, sourceCard]: [number, number],
-        target: number,
-        modifiers: [boolean, boolean, boolean]
+        expected: [[number, number], number, [boolean, boolean, boolean]][][]
       ) => CustomMatcherResult;
     }
   }
@@ -14,9 +12,7 @@ declare global {
 expect.extend({
   toResolveToMoves(
     recieved: unknown,
-    [sourceStack, sourceCard]: [number, number],
-    target: number,
-    modifiers: [boolean, boolean, boolean]
+    expected: [[number, number], number, [boolean, boolean, boolean]][][]
   ): { pass: boolean; message: () => string } {
     if (typeof recieved !== "string") {
       return {
@@ -25,22 +21,33 @@ expect.extend({
       };
     }
 
+    const convertedExpected =
+      expected?.map((move) => {
+        return move.map((subMove) => {
+          const [
+            [sourceStack, sourceCard],
+            target,
+            [turnToFront, allowToMove, doNotAllowToMove],
+          ] = subMove;
+          return {
+            modifiers: {
+              turnToFront,
+              allowToMove,
+              doNotAllowToMove,
+            },
+            sourceStack,
+            sourceCard,
+            target,
+          };
+        });
+      }) ?? null;
+
     const decoder = new MoveNotationDecoder(recieved, null);
-    const expectedObject = {
-      modifiers: {
-        turnToFront: modifiers[0],
-        allowToMove: modifiers[1],
-        doNotAllowToMove: modifiers[2],
-      },
-      sourceStack: sourceStack,
-      sourceCard: sourceCard,
-      target: target,
-    };
 
     if (this.isNot) {
-      expect(decoder.moves).not.toStrictEqual([[expectedObject]]);
+      expect(decoder.moves).not.toStrictEqual(convertedExpected);
     } else {
-      expect(decoder.moves).toStrictEqual([[expectedObject]]);
+      expect(decoder.moves).toStrictEqual(convertedExpected);
     }
 
     return {
@@ -50,8 +57,12 @@ expect.extend({
   },
 });
 
-test("Move notation decoder can handle modifiers, sources and targets", () => {
-  expect("0,0:1;").toResolveToMoves([0, 0], 1, [false, false, false]);
-  expect("*!1,2;").toResolveToMoves([1, 2], null, [true, true, false]);
-  expect("!5,3:4;").toResolveToMoves([5, 3], 4, [false, true, false]);
+test("MoveNotationDecoder can handle modifiers, sources and targets.", () => {
+  expect("0,0:1;").toResolveToMoves([[[[0, 0], 1, [false, false, false]]]]);
+  expect("*!1,2;").toResolveToMoves([[[[1, 2], null, [true, true, false]]]]);
+  expect("!5,3:4;").toResolveToMoves([[[[5, 3], 4, [false, true, false]]]]);
+});
+
+test("MoveNotationDecoder can handle null operations.", () => {
+  expect("~;").toResolveToMoves(null);
 });
