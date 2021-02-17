@@ -4,7 +4,6 @@
   "description": "",
   "main": "",
   "private": true,
-  "type": "module",
   "scripts": {
     "serve": "parcel serve ./src/html/index.html --out-dir build",
     "dist": "parcel build ./src/html/index.html --out-dir dist --no-source-maps",
