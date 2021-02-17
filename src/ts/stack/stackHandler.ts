@@ -21,6 +21,35 @@ interface DropZone {
   stack: number;
 }
 
+function cardIdToIndex(cardId: string): number {
+  const suit = cardId[0];
+  const number = parseInt(cardId.slice(1));
+
+  let offset = 0;
+  switch (suit) {
+    case "c":
+      offset = -1;
+      break;
+
+    case "d":
+      offset = 12;
+      break;
+
+    case "h":
+      offset = 25;
+      break;
+
+    case "s":
+      offset = 38;
+      break;
+
+    default:
+      throw new Error(`CardID with invalid suit '${suit}'`);
+  }
+
+  return number + offset;
+}
+
 export default class StackHandler {
   moveCommands: MoveCommand[] = [];
   collection: CardCollection = null;
@@ -29,13 +58,19 @@ export default class StackHandler {
 
   constructor(
     game: string,
-    numCards: number[],
-    cardBackImage: HTMLImageElement
+    cardBackImage: HTMLImageElement,
+    cards: HTMLImageElement[]
   ) {
     const initialState = solitaire.init(game);
-    console.log(`initial state:\n${initialState}`);
+    const [stackState, cardState] = initialState.split(";");
+
+    const numCards = stackState.split(",").map((value) => parseInt(value));
+
     this.collection = new CardCollection(numCards, cardBackImage);
-    this.collection.forEachCard((card, _index, stackIndex, cardIndex) => {
+    this.collection.forEachCard((card, index, stackIndex, cardIndex) => {
+      const cardId = cardState.slice(3 * index, 3 * index + 3);
+      const cardImageIndex = cardIdToIndex(cardId);
+      card.image = cards[cardImageIndex % cards.length];
       const [homeX, homeY] = this.getHome(stackIndex, cardIndex);
       card.left = homeX;
       card.top = homeY;
