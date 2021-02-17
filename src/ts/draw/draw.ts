@@ -64,13 +64,7 @@ function loop(time: number) {
   requestAnimationFrame(loop);
 }
 
-async function run() {
-  const cardSources = [
-    import("../../img/card-back.png"),
-    import("../../img/card.png"),
-  ];
-  const [cardBack, cards] = await batchLoadCards(cardSources);
-
+export function start(cardBack: HTMLImageElement, cards: HTMLImageElement[]) {
   stackHandler = new DisplayStackHandler(cardBack, cards);
   collection = stackHandler.collection;
   dragManager = new DragManager(collection, stackHandler);
@@ -78,5 +72,3 @@ async function run() {
   previousTime = performance.now();
   requestAnimationFrame(loop);
 }
-
-run();
