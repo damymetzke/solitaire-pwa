@@ -2,10 +2,9 @@ import StackHandler from "./stackHandler";
 
 export default class DisplayStackHandler extends StackHandler {
   constructor(cardBackImage: HTMLImageElement, cardImages: HTMLImageElement[]) {
-    super("display", [13, 13, 13, 14], cardBackImage);
+    super("display", cardBackImage, cardImages);
     this.collection.forEachCard((card, index) => {
       card.isFront = index === 52 ? false : true;
-      card.image = cardImages[index % cardImages.length];
       card.canDrag = true;
     });
 
