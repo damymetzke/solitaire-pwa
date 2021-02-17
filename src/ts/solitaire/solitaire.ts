@@ -27,12 +27,30 @@ export async function waitUntilLoaded(): Promise<void> {
   });
 }
 
-export function ping(): string {
+function instanceValid(name: string) {
   if (wasmInstance === undefined) {
-    console.warn(
-      "solitaire function 'ping' was called, but wasm has not been loaded yet."
+    throw new Error(
+      `solitaire function '${name}' was called, but wasm has not been loaded yet.`
     );
-    return "";
   }
+}
+
+export function ping(): string {
+  instanceValid("ping");
   return wasmInstance.ccall("ping", "string", [], []);
+}
+
+export function init(game: string): string {
+  instanceValid("init");
+  return wasmInstance.ccall("init", "string", ["string"], [game]);
+}
+
+export function reset(): void {
+  instanceValid("reset");
+  wasmInstance.ccall("reset", "number", [], []);
+}
+
+export function attemptMove(move: string): string {
+  instanceValid("attemptMove");
+  return wasmInstance.ccall("attemptMove", "string", ["string"], [move]);
 }

@@ -1,6 +1,7 @@
 import { DrawState } from "../draw/drawState";
 import Card from "../draw/card";
 import CardCollection from "../draw/cardCollection";
+import solitaire from "../solitaire/solitaire";
 
 interface MoveCommand {
   startX: number;
@@ -94,7 +95,7 @@ export default class StackHandler {
   }
 
   attemptMove(source: [number, number], target: number): string {
-    return "~;";
+    return solitaire.attemptMove(`${source[0]},${source[1]}:${target}`);
   }
 
   getHome(stack: number, index: number): [number, number] {
