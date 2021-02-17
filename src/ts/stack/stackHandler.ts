@@ -1,7 +1,7 @@
 import { DrawState } from "../draw/drawState";
 import Card from "../draw/card";
 import CardCollection from "../draw/cardCollection";
-import solitaire from "../solitaire/solitaire";
+import * as solitaire from "../solitaire/solitaire";
 
 interface MoveCommand {
   startX: number;
@@ -27,7 +27,13 @@ export default class StackHandler {
   dirty: DrawState = DrawState.NONE;
   dropZones: DropZone[] = [];
 
-  constructor(numCards: number[], cardBackImage: HTMLImageElement) {
+  constructor(
+    game: string,
+    numCards: number[],
+    cardBackImage: HTMLImageElement
+  ) {
+    const initialState = solitaire.init(game);
+    console.log(`initial state:\n${initialState}`);
     this.collection = new CardCollection(numCards, cardBackImage);
     this.collection.forEachCard((card, _index, stackIndex, cardIndex) => {
       const [homeX, homeY] = this.getHome(stackIndex, cardIndex);
