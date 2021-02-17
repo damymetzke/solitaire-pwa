@@ -2,8 +2,12 @@ const { spawn } = require("child_process");
 const { promises: fs } = require("fs");
 
 function runCommand(command, args, cwd = ".") {
+  const commandName = args.reduce((total, current) => {
+    return `${total} ${current}`;
+  }, command);
+
   return new Promise((resolve, reject) => {
-    console.log(`running command ${command}`);
+    console.log(`Running command:\n${commandName}\n`);
     const childProcess = spawn(command, args, {
       cwd: cwd,
       env: {
@@ -23,7 +27,7 @@ function runCommand(command, args, cwd = ".") {
         reject(error);
         return;
       }
-      console.log(`done with ${command}`);
+      console.log(`Finished running command:\n${commandName}\n`);
       resolve();
     });
   });
@@ -31,7 +35,7 @@ function runCommand(command, args, cwd = ".") {
 
 async function run() {
   try {
-    console.time("running");
+    console.time("deploy-time");
     try {
       await fs.stat("./emsdk");
     } catch (_error) {
@@ -51,7 +55,7 @@ async function run() {
   } catch (error) {
     console.error(`Script failed because:\n${error}`);
   } finally {
-    console.timeEnd("running");
+    console.timeEnd("deploy-time");
   }
 }
 
