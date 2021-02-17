@@ -2,7 +2,7 @@ import StackHandler from "./stackHandler";
 
 export default class DisplayStackHandler extends StackHandler {
   constructor(cardBackImage: HTMLImageElement, cardImages: HTMLImageElement[]) {
-    super([13, 13, 13, 14], cardBackImage);
+    super("display", [13, 13, 13, 14], cardBackImage);
     this.collection.forEachCard((card, index) => {
       card.isFront = index === 52 ? false : true;
       card.image = cardImages[index % cardImages.length];
@@ -28,13 +28,13 @@ export default class DisplayStackHandler extends StackHandler {
     return [(8 / 7) * index + 1 / 7, (8 / 7) * stack * 1.5 + 1 / 7];
   }
 
-  attemptMove(
-    [sourceStack, sourceCard]: [number, number],
-    target: number
-  ): string {
-    if (sourceStack === target) {
-      return "~;";
-    }
-    return `${sourceStack},${sourceCard}:${target}`;
-  }
+  // attemptMove(
+  //   [sourceStack, sourceCard]: [number, number],
+  //   target: number
+  // ): string {
+  //   if (sourceStack === target) {
+  //     return "~;";
+  //   }
+  //   return `${sourceStack},${sourceCard}:${target}`;
+  // }
 }

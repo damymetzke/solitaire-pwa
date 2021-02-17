@@ -1,4 +1,4 @@
-//parcel: -s EXPORTED_FUNCTIONS=['_ping'] -O3 ../../../cmakeBuild/libSolitaire.a
+//parcel: -s EXPORTED_FUNCTIONS=['_ping','_init','_reset','_attemptMove'] -O3 ../../../cmakeBuild/libSolitaire.a
 
 #include "../solitaire/HelloWorld.h"
 
@@ -26,7 +26,7 @@ extern "C"{
 
     const char* attemptMove(const char* move)
     {
-        tmp = "~;";
+        tmp = move;
         return tmp.c_str();
     }
 }
