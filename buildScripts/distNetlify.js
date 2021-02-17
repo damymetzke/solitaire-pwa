@@ -1,4 +1,5 @@
 const { spawn } = require("child_process");
+const { promises: fs } = require("fs");
 
 function runCommand(command, args, cwd = ".") {
   return new Promise((resolve, reject) => {
@@ -31,10 +32,16 @@ function runCommand(command, args, cwd = ".") {
 async function run() {
   try {
     console.time("running");
-    await runCommand("git", [
-      "clone",
-      "https://github.com/emscripten-core/emsdk.git",
-    ]);
+    try {
+      await fs.stat("./emsdk");
+    } catch (_error) {
+      await runCommand("git", [
+        "clone",
+        "https://github.com/emscripten-core/emsdk.git",
+      ]);
+    } finally {
+      await runCommand("git", ["pull"], "./emsdk");
+    }
     await runCommand("./emsdk", ["install", "latest"], "./emsdk");
     await runCommand("./emsdk", ["activate", "latest"], "./emsdk");
     await runCommand("pip", ["install", "cmake"]);
