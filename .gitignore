@@ -5,6 +5,8 @@ emsdk/
 
 cmakeBuild/
 
+.vscode/
+
 # cache diretories
 .cache/
 .parcel-cache/
