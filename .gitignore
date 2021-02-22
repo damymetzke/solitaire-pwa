@@ -4,6 +4,7 @@ dist/
 emsdk/
 
 cmakeBuild/
+cmakeBuildTest/
 
 .vscode/
 
