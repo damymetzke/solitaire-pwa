@@ -22,4 +22,4 @@ private:
     MoveNumberParser m_sourceStackParser;
     MoveNumberParser m_sourceCardParser;
     MoveNumberParser m_targetParser;
-}
+};
