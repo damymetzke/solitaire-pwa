@@ -11,6 +11,9 @@ public:
 
     virtual Parser* ParseCharacter(char character) = 0;
 
+    virtual void OnEnter() {};
+    virtual void OnExit() {};
+
 protected:
     Parser* SwapParser();
     Parser* SwapParser(Parser* nextParser);
@@ -19,7 +22,4 @@ protected:
 
 private:
     Parser* m_nextParser;
-
-    virtual void OnEnter() {};
-    virtual void OnExit() {};
 };

@@ -5,6 +5,8 @@ project(Solitaire)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include_directories("src/cpp")
+
 file(GLOB_RECURSE source_files
             "src/cpp/solitaire/*.h"
             "src/cpp/solitaire/*.cpp"

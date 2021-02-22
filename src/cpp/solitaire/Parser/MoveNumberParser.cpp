@@ -1,6 +1,7 @@
 #include "MoveNumberParser.h"
 
 #include <string>
+#include <exception>
 
 Parser* MoveNumberParser::ParseCharacter(char character)
 {
@@ -13,16 +14,17 @@ Parser* MoveNumberParser::ParseCharacter(char character)
     // todo: limit allowed character depending on output type
     if(character == ',' || character == ':' || character == '/' || character == ';')
     {
-        if(m_outputType == OutputType::SOURCE_STACK && character != ':')
+        if(m_outputType == OutputType::SOURCE_CARD && character != ':')
         {
             return SwapParser(m_altNextParser);
         }
         return SwapParser();
     }
 
-    if(!(character >= '0' && character <= 9))
+    if(!(character >= '0' && character <= '9'))
     {
         // todo: handle error: invalid character
+        ++m_bufferPosition;
         return this; 
     }
 
@@ -38,7 +40,24 @@ void MoveNumberParser::OnEnter()
 
 void MoveNumberParser::OnExit()
 {
-    const uint8_t parsed = std::stoi(m_buffer.data()); 
+    uint8_t parsed;
+
+    if(m_buffer[0] == ' ' && (m_buffer[1] == ' ' || m_buffer[1] == 0))
+    {
+        parsed = 0;
+    }
+    else 
+    {
+        try
+        {
+            parsed = std::stoi(m_buffer.data()); 
+        }
+        catch(std::invalid_argument error)
+        {
+            throw std::invalid_argument("string '" + std::string(m_buffer.data()) + "' could not be parsed as int.");
+        }
+    }
+
     Move& currentMove = m_outputTarget.back();
     switch(m_outputType)
     {
