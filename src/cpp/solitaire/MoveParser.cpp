@@ -16,6 +16,8 @@ void MoveParser::Parse(std::string raw)
     {
         currentParser = currentParser->ParseCharacter(it);
     }
+
+    currentParser->OnExit();
 }
 
 const std::vector<Move>& MoveParser::GetOutput() const

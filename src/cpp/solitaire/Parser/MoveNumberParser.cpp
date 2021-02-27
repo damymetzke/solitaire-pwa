@@ -14,6 +14,10 @@ Parser* MoveNumberParser::ParseCharacter(char character)
     // todo: limit allowed character depending on output type
     if(character == ',' || character == ':' || character == '/' || character == ';')
     {
+        if(character == ';')
+        {
+            m_outputTarget.back().flags |= MoveFlag::FINAL_SUB_MOVE;     
+        }
         if(m_outputType == OutputType::SOURCE_CARD && character != ':')
         {
             return SwapParser(m_altNextParser);
