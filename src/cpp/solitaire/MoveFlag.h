@@ -6,10 +6,10 @@ enum class MoveFlag : uint8_t
 {
     NONE              = 0,
     FINAL_SUB_MOVE    = 1 << 0,
-    TURN_TO_FRONT     = 2 << 1,
-    TURN_TO_BACK      = 2 << 2,
-    ALLOW_MOVE        = 2 << 3,
-    DO_NOT_ALLOW_MOVE = 2 << 4,
+    TURN_TO_FRONT     = 1 << 1,
+    TURN_TO_BACK      = 1 << 2,
+    ALLOW_MOVE        = 1 << 3,
+    DO_NOT_ALLOW_MOVE = 1 << 4,
 };
 
 inline constexpr MoveFlag operator|(MoveFlag a, MoveFlag b)

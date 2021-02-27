@@ -26,7 +26,7 @@ Parser* Parser::SwapParser(Parser* nextParser)
         throw std::runtime_error("nextParser is nullptr");
     }
     OnExit();
-    m_nextParser->OnEnter();
+    nextParser->OnEnter();
     return nextParser;
 }
 
@@ -48,6 +48,6 @@ Parser* Parser::SwapParserAndParse(Parser* nextParser, char character)
         throw std::runtime_error("nextParser is nullptr");
     }
     OnExit();
-    m_nextParser->OnEnter();
+    nextParser->OnEnter();
     return m_nextParser->ParseCharacter(character);
 }
