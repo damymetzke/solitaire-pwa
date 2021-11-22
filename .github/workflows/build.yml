@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - uses: mymindstorm/setup-emsdk@v8
+      - uses: mymindstorm/setup-emsdk@v11
       - run: npm run setup-cmake
       - run: npm run build-cmake
       - run: npm run dist
